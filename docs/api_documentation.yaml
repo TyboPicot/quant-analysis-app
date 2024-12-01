@@ -1,0 +1,156 @@
+openapi: 3.0.0
+info:
+  title: Quantitative Analysis API
+  description: API permettant de comparer différentes stratégies d'analyse quantitative sur divers produits financiers.
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000
+    description: Serveur de développement local
+
+tags:
+  - name: Strategies
+    description: Gestion des stratégies disponibles
+  - name: Analyze
+    description: Analyse des produits financiers
+
+paths:
+  /healthcheck:
+    get:
+      summary: Vérifie l'état de l'API
+      tags:
+        - Healthcheck
+      responses:
+        '200':
+          description: L'API est opérationnelle
+          content:
+            application/json:
+              example:
+                status: OK
+
+  /strategies:
+    get:
+      summary: Récupère la liste des stratégies disponibles
+      tags:
+        - Strategies
+      responses:
+        '200':
+          description: Liste des stratégies
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  strategies:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: Identifiant de la stratégie
+                          example: moving_average
+                        name:
+                          type: string
+                          description: Nom de la stratégie
+                          example: Moyennes Mobiles
+                        type:
+                          type: string
+                          description: Type de stratégie
+                          example: trend
+
+  /analyze:
+    post:
+      summary: Lance une analyse quantitative pour une stratégie et un produit donnés
+      tags:
+        - Analyze
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ticker:
+                  type: string
+                  description: Symbole du produit financier (ex. AAPL pour Apple)
+                  example: AAPL
+                strategy:
+                  type: string
+                  description: Stratégie à appliquer
+                  example: moving_average
+                start_date:
+                  type: string
+                  format: date
+                  description: Date de début pour l'analyse
+                  example: 2023-01-01
+                end_date:
+                  type: string
+                  format: date
+                  description: Date de fin pour l'analyse
+                  example: 2023-12-31
+      responses:
+        '200':
+          description: Résultats de l'analyse
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  signals:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          format: date
+                          example: 2023-05-01
+                        signal:
+                          type: string
+                          description: Type de signal (ex. BUY ou SELL)
+                          example: BUY
+                  cumulative_return:
+                    type: number
+                    format: float
+                    description: Rendement cumulatif de la stratégie
+                    example: 12.34
+                  max_drawdown:
+                    type: number
+                    format: float
+                    description: Perte maximale en pourcentage
+                    example: -5.67
+                  sharpe_ratio:
+                    type: number
+                    format: float
+                    description: Ratio de Sharpe
+                    example: 1.45
+  /products:
+    get:
+      summary: Récupère la liste des produits financiers disponibles
+      tags:
+        - Products
+      responses:
+        '200':
+          description: Liste des produits financiers
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        symbol:
+                          type: string
+                          description: Symbole du produit (ticker ou code)
+                          example: AAPL
+                        name:
+                          type: string
+                          description: Nom du produit
+                          example: Apple Inc.
+                        category:
+                          type: string
+                          description: Catégorie du produit (action, devise, matière première)
+                          example: stock
