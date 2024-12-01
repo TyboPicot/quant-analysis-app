@@ -1,5 +1,4 @@
 import yfinance as yf
-import pandas as pd
 import talib
 
 def moving_average_analysis(ticker, start_date, end_date):

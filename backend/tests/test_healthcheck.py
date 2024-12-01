@@ -1,7 +1,4 @@
-from main import app
-
-def test_healthcheck():
-    with app.test_client() as client:
-        response = client.get('/healthcheck')
-        assert response.status_code == 200
-        assert response.json == {"status": "OK"}
+def test_healthcheck(client):
+    response = client.get("/healthcheck")
+    assert response.status_code == 200
+    assert response.json == {'message': 'Server is healthy', 'status': 'ok'}
