@@ -1,0 +1,16 @@
+<h2>Formulaire d'analyse</h2>
+<form (ngSubmit)="onSubmit()">
+  <label for="strategy">Stratégie</label>
+  <input id="strategy" [(ngModel)]="strategy" name="strategy" required />
+
+  <label for="symbol">Produit</label>
+  <input id="symbol" [(ngModel)]="symbol" name="symbol" required />
+
+  <label for="start_date">Date de début</label>
+  <input id="start_date" [(ngModel)]="start_date" name="start_date" type="date" required />
+
+  <label for="end_date">Date de fin</label>
+  <input id="end_date" [(ngModel)]="end_date" name="end_date" type="date" required />
+
+  <button type="submit">Soumettre</button>
+</form>
