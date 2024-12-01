@@ -1,10 +1,10 @@
-from flask_restx import Namespace, Resource
-from flask import request
+from importlib.resources import Resource
+from flask import request, Blueprint
 from app.services.analysis_service import moving_average_analysis
 
-analyze_ns = Namespace("analyze", description="Run strategy analysis")
+analyze_bp = Blueprint("analyze", __name__)
 
-@analyze_ns.route("/")
+
 class Analyze(Resource):
     def post(self):
         """Lance une analyse quantitative pour un produit financier donné."""
@@ -22,3 +22,9 @@ class Analyze(Resource):
             return result, 200
 
         return {"error": "Strategy not implemented"}, 400
+
+analyse_controller = Analyze()
+
+@analyze_bp.route("/analyze", methods=["POST"])
+def analyze():
+    return analyse_controller.post()

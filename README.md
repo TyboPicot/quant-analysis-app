@@ -190,7 +190,43 @@ Lancez l'application :
 python main.py
 ```
 L'API sera disponible sur http://localhost:5000.
-### **2. Tests**
+
+### **2. Installation de TA-Lib**
+Problème classique : L’installation de TA-Lib échoue si ses bibliothèques C sous-jacentes ne sont pas déjà installées. Voici comment régler ce problème selon ton système d’exploitation.
+
+#### Pour Linux
+Installe les dépendances système via apt (ou équivalent) :
+```bash
+sudo apt update
+sudo apt install -y build-essential libta-lib0 libta-lib0-dev
+```
+Ensuite, installe les dépendances Python :
+```bash
+pip install TA-Lib
+```
+
+#### Pour macOS
+Installe TA-Lib via brew :
+```bash
+brew install ta-lib
+```
+Ensuite, installe la version Python :
+```bash
+pip install TA-Lib
+```
+
+#### Pour Windows
+Télécharge et installe les fichiers binaires pré-compilés de TA-Lib :
+https://github.com/cgohlke/talib-build/releases.
+Choisis la version correspondant à ton Python (par ex., TA_Lib‑0.4.0‑cp39‑cp39‑win_amd64.whl pour Python 3.9 64 bits).
+
+Installe ensuite le fichier .whl téléchargé :
+
+```bash
+pip install TA_Lib‑0.4.0‑cp39‑cp39‑win_amd64.whl
+```
+
+### **3. Tests**
 Pour exécuter les tests, utilisez :
 
 ```bash

@@ -1,6 +1,7 @@
-from flask_restx import Namespace, Resource
+from flask import Blueprint
+from importlib.resources import Resource
 
-products_ns = Namespace("products", description="List of available financial products")
+products_bp = Blueprint("products", __name__)
 
 # Liste fictive de produits financiers
 PRODUCTS = [
@@ -11,8 +12,16 @@ PRODUCTS = [
     {"symbol": "BTCUSD", "name": "Bitcoin", "category": "cryptocurrency"},
 ]
 
-@products_ns.route("/")
+
 class ProductList(Resource):
     def get(self):
         """Récupère la liste des produits financiers disponibles."""
         return {"products": PRODUCTS}, 200
+
+
+products_controller = ProductList()
+
+
+@products_bp.route("/products", methods=["GET"])
+def products():
+    return products_controller.get()

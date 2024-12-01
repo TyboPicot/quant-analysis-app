@@ -1,6 +1,7 @@
-from flask_restx import Namespace, Resource
+from flask import Blueprint
+from importlib.resources import Resource
 
-strategies_ns = Namespace("strategies", description="List of trading strategies")
+strategies_bp = Blueprint("strategies", __name__)
 
 # Liste des stratégies disponibles
 STRATEGIES = [
@@ -11,8 +12,13 @@ STRATEGIES = [
     {"id": "pair_trading", "name": "Pair Trading", "type": "statistical"},
 ]
 
-@strategies_ns.route("/")
 class StrategyList(Resource):
     def get(self):
         """Récupère la liste des stratégies disponibles."""
         return {"strategies": STRATEGIES}, 200
+
+strategies_controller = StrategyList()
+
+@strategies_bp.route("/strategies", methods=["GET"])
+def strategies():
+    return strategies_controller.get()
